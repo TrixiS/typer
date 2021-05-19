@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Typography, Button, Input, Form } from "antd";
+import { Button, Input, Form } from "antd";
 import { Screen } from "../components/Layout";
 
 interface SignUpProps {
@@ -14,19 +14,19 @@ export default function Home() {
     router.push({ pathname: "/register", query: { email: values.email } });
 
   return (
-    <Screen first className="items-center justify-center">
-      <div className="flex flex-col w-1/2 gap-6 md:gap-8 mx-5">
-        <Typography.Text strong className="h1 text-3xl md:text-4xl lg:text-8xl">
+    <Screen first className="items-center justify-items-center">
+      <div className="flex flex-col w-3/4 gap-6 md:gap-12 items-center mx-3 lg:mx-5 pt-24">
+        <div className="h1 leading-none font-extrabold text-center text-5xl md:text-6xl lg:text-8xl">
           The game based on typing speed
-        </Typography.Text>
+        </div>
 
-        <Typography.Text className="text-1xl md:text-2xl lg:text-4xl">
+        <div className="h3 leading-relaxed font-normal text-gray-600 text-center text-base md:text-lg lg:text-xl mb-3 lg:w-5/6">
           Show your typing speed in single/multiplayer mode. Create and play
           your own typing maps
-        </Typography.Text>
+        </div>
 
         <Form
-          className="flex flex-wrap gap-2 lg:flex-row lg:flex-nowrap"
+          className="flex flex-wrap lg:flex-row lg:flex-nowrap w-4/6 lg:w-5/6 gap-2"
           onFinish={handleFinish}
         >
           <Form.Item name="email" rules={[{ required: true }]} noStyle>
@@ -49,7 +49,7 @@ export default function Home() {
         </Form>
       </div>
 
-      <div className="flex flex-col w-1/2 mx-5">
+      <div className="flex flex-col w-full mx-5">
         <Image
           src="/svg/keyboard.svg"
           height="full"

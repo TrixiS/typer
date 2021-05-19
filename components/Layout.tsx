@@ -9,7 +9,7 @@ export interface ScreenProps extends React.HTMLAttributes<HTMLDivElement> {
 export function Screen({ children, first, className, ...rest }: ScreenProps) {
   return (
     <div
-      className={`flex flex-row ${className ?? ""}`}
+      className={`flex flex-col w-full max-w-full ${className ?? ""}`}
       style={{ height: first ?? false ? "calc(100vh - 4rem)" : "100vh" }}
       {...rest}
     >

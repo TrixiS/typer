@@ -9,8 +9,6 @@ import "../styles/globals.css";
 function AppHeader() {
   // TODO: dropdown in menu
   // TODO: logo component <- logo
-  // Module for menu
-  // export header
 
   return (
     <Header>
@@ -22,7 +20,6 @@ function AppHeader() {
   );
 }
 
-// TODO: github-like homepage text | image (keyboard)
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
@@ -35,13 +32,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* <div className="flex flex-col"> */}
       <AppHeader />
 
       <div className="flex flex-col">
         <Component {...pageProps} />
       </div>
-      {/* </div> */}
     </>
   );
 }
