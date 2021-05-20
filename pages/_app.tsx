@@ -33,10 +33,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </Head>
 
       <AppHeader />
-
-      <div className="flex flex-col">
-        <Component {...pageProps} />
-      </div>
+      <Component {...pageProps} />
     </>
   );
 }

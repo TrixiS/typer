@@ -3,14 +3,10 @@ import { useRouter } from "next/router";
 import { Button, Input, Form } from "antd";
 import { Screen } from "../components/Layout";
 
-interface SignUpProps {
-  email: string;
-}
-
 export default function Home() {
   const router = useRouter();
 
-  const handleFinish = (values: SignUpProps) =>
+  const handleFinish = (values: { email: string }) =>
     router.push({ pathname: "/register", query: { email: values.email } });
 
   return (
