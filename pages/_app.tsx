@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import useUser from "lib/useUser";
 import { AppProps } from "next/app";
 import { Header } from "../components/Layout";
 import { Menu } from "../components/Menu";
@@ -9,6 +10,7 @@ import "../styles/globals.css";
 function AppHeader() {
   // TODO: dropdown in menu
   // TODO: logo component <- logo
+  const { user } = useUser();
 
   return (
     <Header>

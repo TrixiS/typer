@@ -7,11 +7,17 @@ export interface UseUserProps {
   redirectIfFound?: boolean;
 }
 
+export type User = {
+  isLoggedIn: boolean;
+  verified: boolean;
+  email: string;
+  username: string;
+};
+
 export default function useUser({
   redirectTo,
   redirectIfFound = false,
-}: UseUserProps) {
-  // TODO: add access token from persisted state (context)
+}: UseUserProps = {}): { user: User; mutateUser: any } {
   const { data: user, mutate: mutateUser } = useSWR("/api/user");
 
   React.useEffect(() => {

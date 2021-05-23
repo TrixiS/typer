@@ -11,7 +11,9 @@ const handler = async (req: IronSessionRequest, res: NextApiResponse) => {
 
   res.json({
     isLoggedIn: true,
-    ...user,
+    username: user.username,
+    email: user.email,
+    verified: user.verified,
   });
 };
 
