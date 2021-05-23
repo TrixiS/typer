@@ -11,11 +11,16 @@ interface RegisterFormValues {
 
 export default function Register() {
   const router = useRouter();
-  const { email } = router.query;
   const [form] = Form.useForm();
 
-  const handleFinish = (values: RegisterFormValues) => {
-    console.log("Submited", values);
+  const handleFinish = async (values: RegisterFormValues) => {
+    const res = await fetch("/api/register", {
+      method: "POST",
+      body: JSON.stringify(values),
+    });
+
+    // TODO: push to the router source path
+    if (res.ok) router.push("/");
   };
 
   return (
@@ -32,7 +37,7 @@ export default function Register() {
       <Form
         className="font-semibold w-11/12 md:w-3/6 lg:w-2/6"
         form={form}
-        initialValues={{ email }}
+        initialValues={router.query}
         layout="vertical"
         onFinish={handleFinish}
         scrollToFirstError
