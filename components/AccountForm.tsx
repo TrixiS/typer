@@ -2,7 +2,6 @@ import * as React from "react";
 import { Form, Input, Button, FormProps } from "antd";
 
 export interface AccountFormProps extends FormProps {
-  children?: React.ReactNode;
   submitButtonText: string;
 }
 

@@ -4,6 +4,9 @@ export interface MenuItemProps extends React.HTMLAttributes<HTMLLIElement> {
   selected: boolean;
 }
 
+// TODO: make MenuItem public component
+// Use MenuItemWrapper to wrap menu component
+// add selectable to MenuItem
 export function Menu({
   children,
   ...rest

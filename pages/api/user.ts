@@ -4,7 +4,7 @@ import withSession, { IronSessionRequest } from "lib/session";
 const handler = async (req: IronSessionRequest, res: NextApiResponse) => {
   const user = req.session.get("user");
 
-  if (user === null)
+  if (!user)
     return res.json({
       isLoggedIn: false,
     });

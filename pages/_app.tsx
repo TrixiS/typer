@@ -4,19 +4,35 @@ import useUser from "lib/useUser";
 import { AppProps } from "next/app";
 import { Header } from "../components/Layout";
 import { Menu } from "../components/Menu";
+import { AccountDropdown } from "components/AccountDropdown";
 import "antd/dist/antd.css";
 import "../styles/globals.css";
 
 function AppHeader() {
-  // TODO: dropdown in menu
   // TODO: logo component <- logo
-  const { user } = useUser();
+
+  // TODO: handle isLoading
+  const { user, mutateUser } = useUser();
+
+  const handleLogout = async () => {
+    await fetch("/api/logout", { method: "POST" });
+    await mutateUser({ isLoggedIn: false });
+  };
 
   return (
     <Header>
       <Menu>
         <Link href="/">Home</Link>
         <Link href="/signup">Register</Link>
+        {user?.isLoggedIn ? (
+          <AccountDropdown
+            user={user}
+            onLogout={handleLogout}
+            trigger={["click"]}
+          />
+        ) : (
+          <Link href="signin">Sign in</Link>
+        )}
       </Menu>
     </Header>
   );
