@@ -17,8 +17,8 @@ export type User = {
 export default function useUser({
   redirectTo,
   redirectIfFound = false,
-}: UseUserProps = {}): { user: User; mutateUser: any } {
-  const { data: user, mutate: mutateUser } = useSWR("/api/user");
+}: UseUserProps = {}) {
+  const { data: user, mutate: mutateUser } = useSWR<User>("/api/user");
 
   React.useEffect(() => {
     if (!redirectTo || !user) return;

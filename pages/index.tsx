@@ -7,7 +7,7 @@ export default function Home() {
   const router = useRouter();
 
   const handleFinish = (values: { email: string }) =>
-    router.push({ pathname: "/register", query: { email: values.email } });
+    router.push({ pathname: "/signup", query: { email: values.email } });
 
   return (
     <Screen first className="items-center justify-items-center">

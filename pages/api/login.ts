@@ -41,7 +41,13 @@ const handler = async (req: IronSessionRequest, res: NextApiResponse) => {
 
   req.session.set("user", user);
   await req.session.save();
-  res.status(200).end();
+
+  res.json({
+    isLoggedIn: true,
+    username: user.username,
+    email: user.email,
+    verified: user.verified,
+  });
 };
 
 export default withSession(withValidate(handler, loginBodyShema));

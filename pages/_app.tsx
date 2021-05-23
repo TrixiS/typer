@@ -16,7 +16,7 @@ function AppHeader() {
     <Header>
       <Menu>
         <Link href="/">Home</Link>
-        <Link href="/register">Register</Link>
+        <Link href="/signup">Register</Link>
       </Menu>
     </Header>
   );
