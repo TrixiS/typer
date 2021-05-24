@@ -1,5 +1,5 @@
 import Link from "next/link";
-import useUser from "lib/useUser";
+import { useUser } from "lib/auth";
 import { useRouter } from "next/router";
 import { Typography, Form, Input } from "antd";
 import { Screen } from "components/Layout";

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import useUser from "lib/useUser";
+import { useUser } from "lib/auth";
 import { AppProps } from "next/app";
 import { Header } from "../components/Layout";
 import { Menu } from "../components/Menu";

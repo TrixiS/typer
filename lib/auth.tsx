@@ -1,5 +1,6 @@
 import * as React from "react";
-import Router from "next/router";
+import Router, { withRouter } from "next/router";
+import { NextComponentType } from "next";
 import useFetcher from "lib/useFetcher";
 
 export interface UseUserProps {
@@ -14,7 +15,11 @@ export type User = {
   username?: string;
 };
 
-export default function useUser({
+export interface AuthComponentProps<T> extends React.HTMLAttributes<T> {
+  user: User;
+}
+
+export function useUser({
   redirectTo,
   redirectIfFound = false,
 }: UseUserProps = {}) {
@@ -31,4 +36,19 @@ export default function useUser({
   }, [user, redirectIfFound, redirectTo]);
 
   return { user, mutateUser };
+}
+
+export function withAuth(Component: NextComponentType) {
+  const AuthComponent: NextComponentType = withRouter((props: any) => {
+    const { user } = useUser();
+
+    if (!user?.isLoggedIn) return props.router.push("/login");
+
+    return <Component user={user} {...props} />;
+  });
+
+  if (Component.getInitialProps)
+    AuthComponent.getInitialProps = Component.getInitialProps;
+
+  return <AuthComponent />;
 }

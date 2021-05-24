@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Menu, Dropdown, DropDownProps } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { User } from "lib/useUser";
+import { User } from "lib/auth";
 
-type AccountDropdownProps = Omit<DropDownProps, "overlay"> & {
+export type AccountDropdownProps = Omit<DropDownProps, "overlay"> & {
   user: User;
   onLogout: () => void;
 };
