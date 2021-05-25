@@ -34,14 +34,14 @@ function Profile({ profile, ...rest }: ProfileProps) {
         <ProfileAvatar src={profile.avatarUrl} />
       </div>
       <div className="flex flex-col w-3/4">
-        <div className="h-1/4">
+        <div className="h-1/1">
           <h2 className="text-2xl font-semibold">{profile.user.username}</h2>
           <h3 className="text-sm">{profile.status}</h3>
         </div>
         {profile.about && (
-          <div className="h-3/4">
-            <Divider className="h-1/6" />
-            <div className="h-5/6 -mt-6">
+          <div className="h-2/3">
+            <Divider className="h-1/12" />
+            <div className="h-11/12">
               <h3 className="text-sm text-gray-700">{profile.about}</h3>
             </div>
           </div>
