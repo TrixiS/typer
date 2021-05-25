@@ -38,13 +38,11 @@ export function useUser({
   return { user, mutateUser };
 }
 
+// TODO: test it
 export function withAuth(Component: NextComponentType) {
   const AuthComponent: NextComponentType = withRouter((props: any) => {
-    const { user } = useUser();
-
-    if (!user?.isLoggedIn) return props.router.push("/login");
-
-    return <Component user={user} {...props} />;
+    const { user } = useUser({ redirectTo: "/signin" });
+    if (user?.isLoggedIn) return <Component user={user} {...props} />;
   });
 
   if (Component.getInitialProps)

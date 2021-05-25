@@ -4,6 +4,7 @@ import * as bcrypt from "bcrypt";
 import { NextApiResponse } from "next";
 import withSession, { IronSessionRequest } from "lib/session";
 import withValidate from "lib/withValidate";
+import { User } from "lib/auth";
 
 const loginBodyShema = yup.object({
   sub: yup.string().required(),
@@ -12,7 +13,7 @@ const loginBodyShema = yup.object({
 
 type LoginBody = yup.TypeOf<typeof loginBodyShema>;
 
-const handler = async (req: IronSessionRequest, res: NextApiResponse) => {
+const handler = async (req: IronSessionRequest, res: NextApiResponse<User>) => {
   // TODO: make /profile to get/put/delete
   // TODO: middleware for method restricts
   if (req.method !== "POST") return res.status(405).end();
@@ -21,18 +22,7 @@ const handler = async (req: IronSessionRequest, res: NextApiResponse) => {
 
   const user = await prisma.user.findFirst({
     where: {
-      OR: [
-        {
-          email: {
-            equals: sub,
-          },
-        },
-        {
-          username: {
-            equals: sub,
-          },
-        },
-      ],
+      OR: [{ email: sub }, { username: sub }],
     },
   });
 

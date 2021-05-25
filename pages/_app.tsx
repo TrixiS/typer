@@ -26,12 +26,13 @@ function AppHeader() {
         <Link href="/signup">Register</Link>
         {user?.isLoggedIn ? (
           <AccountDropdown
+            overlayClassName="shadow-sm"
             user={user}
             onLogout={handleLogout}
             trigger={["click"]}
           />
         ) : (
-          <Link href="signin">Sign in</Link>
+          <Link href="/signin">Sign in</Link>
         )}
       </Menu>
     </Header>

@@ -13,12 +13,10 @@ export function AccountDropdown({
   onLogout,
   ...rest
 }: AccountDropdownProps) {
-  // TODO: profile/user
-
   const menu = (
     <Menu>
       <Menu.Item key="profile">
-        <Link href="/profile">Profile</Link>
+        <Link href={`/profile/${user.username}`}>Profile</Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item onClick={onLogout} key="logout" danger>

@@ -25,14 +25,22 @@ const handler = async (req: IronSessionRequest, res: NextApiResponse) => {
 
   try {
     const user = await prisma.user.create({
-      data: { email, username, passwordHash },
+      data: {
+        email,
+        username,
+        passwordHash,
+        profile: {
+          create: {},
+        },
+      },
     });
 
     req.session.set("user", user);
     await req.session.save();
     res.status(200).end();
-  } catch {
-    res.status(409).end();
+  } catch (e) {
+    console.log(e);
+    return res.status(409).end();
   }
 };
 
