@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import Router from "next/router";
 import { useUser } from "lib/auth";
 import { AppProps } from "next/app";
 import { Header } from "../components/Layout";
@@ -10,13 +11,12 @@ import "../styles/globals.css";
 
 function AppHeader() {
   // TODO: logo component <- logo
-
-  // TODO: handle isLoading
   const { user, mutateUser } = useUser();
 
   const handleLogout = async () => {
     await fetch("/api/logout", { method: "POST" });
     await mutateUser({ isLoggedIn: false });
+    await Router.push("/signin");
   };
 
   return (

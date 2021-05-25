@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useRouter } from "next/router";
 import { Form, Input } from "antd";
-import { Screen } from "../components/Layout";
+import { useUser } from "lib/auth";
+import { Screen } from "components/Layout";
 import { PageHeading } from "components/Typography";
 import { AccountForm } from "components/AccountForm";
 
@@ -12,6 +13,7 @@ interface RegisterFormValues {
 }
 
 export default function Register() {
+  const { mutateUser } = useUser();
   const router = useRouter();
 
   const handleFinish = async (values: RegisterFormValues) => {
@@ -20,8 +22,10 @@ export default function Register() {
       body: JSON.stringify(values),
     });
 
-    // TODO: push to the router source path
-    if (res.ok) await router.push("/");
+    if (!res.ok) return;
+
+    await mutateUser({ isLoggedIn: true });
+    await router.push("/");
   };
 
   return (
