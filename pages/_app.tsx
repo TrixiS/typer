@@ -3,8 +3,8 @@ import Link from "next/link";
 import Router from "next/router";
 import { useUser } from "lib/auth";
 import { AppProps } from "next/app";
-import { Header } from "../components/Layout";
-import { Menu } from "../components/Menu";
+import { Header } from "components/Layout";
+import { Menu, MenuItem } from "components/Menu";
 import { AccountDropdown } from "components/AccountDropdown";
 import "antd/dist/antd.css";
 import "../styles/globals.css";
@@ -22,17 +22,25 @@ function AppHeader() {
   return (
     <Header>
       <Menu>
-        <Link href="/">Home</Link>
-        <Link href="/signup">Register</Link>
+        <MenuItem>
+          <Link href="/">Home</Link>
+        </MenuItem>
+        <MenuItem>
+          <Link href="/signup">Register</Link>
+        </MenuItem>
         {user?.isLoggedIn ? (
-          <AccountDropdown
-            overlayClassName="shadow-sm"
-            user={user}
-            onLogout={handleLogout}
-            trigger={["click"]}
-          />
+          <MenuItem selectable={false}>
+            <AccountDropdown
+              overlayClassName="shadow-sm"
+              user={user}
+              onLogout={handleLogout}
+              trigger={["click"]}
+            />
+          </MenuItem>
         ) : (
-          <Link href="/signin">Sign in</Link>
+          <MenuItem>
+            <Link href="/signin">Sign in</Link>
+          </MenuItem>
         )}
       </Menu>
     </Header>
