@@ -27,9 +27,11 @@ export function AccountDropdown({
 
   return (
     <Dropdown overlay={menu} {...rest}>
-      <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-        {/* // TODO: up icon */}
-        {user.username} <UserOutlined />
+      <a
+        className="flex flex-row ant-dropdown-link gap-x-2"
+        onClick={(e) => e.preventDefault()}
+      >
+        {user.username} <UserOutlined className="mt-2" />
       </a>
     </Dropdown>
   );
