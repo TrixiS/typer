@@ -1,10 +1,11 @@
 import * as React from "react";
 import prisma from "lib/prisma";
-import { Profile as ProfileType } from "@prisma/client";
+import { Profile as ProfileDto, Map } from "@prisma/client";
 import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
 import { Card } from "antd";
 import { Screen } from "components/Layout";
 import { Profile, ProfileAvatar, ProfileContent } from "components/Profile";
+import { MapCard } from "components/MapCard";
 
 export default function ProfilePage({
   profile,
@@ -23,7 +24,11 @@ export default function ProfilePage({
           </Card>
         </div>
         <div className="flex flex-col w-full md:w-1/2">
-          <Card title={`${profile.user.username}'s maps`}></Card>
+          <Card title={`${profile.user.username}'s maps`}>
+            {profile.user.maps.map((m) => (
+              <MapCard map={m} />
+            ))}
+          </Card>
         </div>
       </div>
     </Screen>
@@ -31,18 +36,22 @@ export default function ProfilePage({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const usernames = await prisma.user.findMany({ select: { username: true } });
-  const paths = usernames.map((username) => ({ params: username }));
-  return { paths, fallback: "blocking" };
+  const ids = await prisma.user.findMany({ select: { id: true } });
+  const paths = ids.map((id) => ({ params: { id: id.id.toString() } }));
+  return { paths, fallback: "blocking" }; // TODO: use just getServerSideProps ?
 };
 
 export const getStaticProps: GetStaticProps<
-  { profile: ProfileType & { user: { username: string } } },
-  { username: string }
+  { profile: ProfileDto & { user: { username: string; maps: Map[] } } },
+  { id: string }
 > = async (context) => {
+  const userId = Number.parseInt(context.params.id);
+
+  if (Number.isNaN(userId) || userId < 1) return { notFound: true };
+
   const profile = await prisma.profile.findFirst({
-    where: { user: { username: context.params.username } },
-    include: { user: { select: { username: true } } },
+    where: { userId },
+    include: { user: { select: { username: true, maps: true } } },
   });
 
   if (!profile)

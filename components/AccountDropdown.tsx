@@ -16,7 +16,7 @@ export function AccountDropdown({
   const menu = (
     <Menu>
       <Menu.Item key="profile">
-        <Link href={`/profile/${user.username}`}>Profile</Link>
+        <Link href={`/profile/${user.id}`}>Profile</Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item onClick={onLogout} key="logout" danger>
@@ -28,10 +28,10 @@ export function AccountDropdown({
   return (
     <Dropdown overlay={menu} {...rest}>
       <a
-        className="flex flex-row ant-dropdown-link gap-x-2"
+        className="flex flex-row ant-dropdown-link gap-x-2 items-center"
         onClick={(e) => e.preventDefault()}
       >
-        {user.username} <UserOutlined className="mt-2" />
+        {user.username} <UserOutlined />
       </a>
     </Dropdown>
   );

@@ -1,18 +1,22 @@
 import * as React from "react";
 import Router, { withRouter } from "next/router";
-import { NextComponentType } from "next";
 import useFetcher from "lib/useFetcher";
+import withSession, { IronSessionRequest } from "lib/session";
+import { User as UserDto } from "@prisma/client";
+import { NextApiResponse, NextComponentType } from "next";
+import { ApiHandler } from "lib/api";
 
 export interface UseUserProps {
   redirectTo?: string;
   redirectIfFound?: boolean;
 }
 
-export type User = {
+export type User = Partial<UserDto> & {
   isLoggedIn: boolean;
-  verified?: boolean;
-  email?: string;
-  username?: string;
+};
+
+export type UserRequest = IronSessionRequest & {
+  user: UserDto;
 };
 
 export interface AuthComponentProps<T> extends React.HTMLAttributes<T> {
@@ -38,7 +42,7 @@ export function useUser({
   return { user, mutateUser };
 }
 
-// TODO: test it
+// TODO: Test all of these wrappers
 export function withAuth(Component: NextComponentType) {
   const AuthComponent: NextComponentType = withRouter((props: any) => {
     const { user } = useUser({ redirectTo: "/signin" });
@@ -49,4 +53,20 @@ export function withAuth(Component: NextComponentType) {
     AuthComponent.getInitialProps = Component.getInitialProps;
 
   return <AuthComponent />;
+}
+
+export function withUser(handler: ApiHandler) {
+  const handlerAuthWrapper = (
+    req: IronSessionRequest,
+    res: NextApiResponse
+  ) => {
+    const user = req.session.get<UserDto>("user");
+
+    if (user === null) return res.status(401).end();
+
+    (req as UserRequest).user = user;
+    return handler(req, res);
+  };
+
+  return withSession(handlerAuthWrapper);
 }
